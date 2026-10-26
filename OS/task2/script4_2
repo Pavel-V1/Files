@@ -1,0 +1,25 @@
+#!/bin/bash
+
+like_find() {
+	if [ ! -e "$1" ]
+	then
+		exit 0
+	fi
+	n=$(expr $2 + 1)
+        for file in "$1"/*
+        do
+		echo "$n) $file"
+                if [ -d "$file" ]
+		then
+			like_find "$file" "$n"
+                fi
+        done
+	n=$2
+}
+
+if [ $# -eq 0 ]
+then
+        like_find "." 0
+else
+        like_find "$1" 0
+fi
