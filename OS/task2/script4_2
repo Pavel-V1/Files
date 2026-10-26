@@ -3,7 +3,7 @@
 like_find() {
 	if [ ! -e "$1" ]
 	then
-		exit 0
+		return
 	fi
 	n=$(expr $2 + 1)
         for file in "$1"/*
