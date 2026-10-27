@@ -1,0 +1,49 @@
+#!/bin/bash
+
+while [ -n "$1" ]
+do
+	case "$1" in
+	-n)
+		n="$2"
+		shift 2
+		;;
+	-t)
+		t="$2"
+		shift 2
+		;;
+	--)
+		shift
+		text="$*"
+		if [ -z "$text" ]
+		then
+			echo "Введите текст для вывода"
+			exit 1
+		fi
+		break
+		;;
+	*)
+		echo "Передайте аргументы в формате "\
+"'-n <число выводов текста> -t <таймаут вывода> -- <текст>'"
+		exit 2
+		;;
+	esac
+done
+
+if [ -z "$n" -o "$n" -le 0 ]
+then
+	n=1
+fi
+if [ -z "$t" -o "$t" -lt 0 ]
+then
+	t=0
+fi
+
+while [ "$n" -ge 1 ]
+do
+	echo "$text"
+	n=$(expr $n - 1)
+	if [ "$n" -ge 1 ]
+	then
+		sleep "$t"
+	fi
+done

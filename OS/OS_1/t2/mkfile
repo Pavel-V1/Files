@@ -1,0 +1,31 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]
+then
+	echo "Ошибка: Имя файла не указано"
+	exit 1
+fi
+
+if [ ! -e "$1" ]
+then
+	if touch "$1"
+	then
+		echo "Файл успешно создан"
+	else
+		echo "Не удалось создать файл"
+		exit 2
+	fi
+else
+	echo "Файл с таким названием уже существует"
+fi
+
+if [ "$2" ]
+then
+	if chmod "$2" "$1"
+	then
+		echo "Права доступа успешно установлены"
+	else
+		echo "Не удалось установить права доступа"
+		exit 3
+	fi
+fi

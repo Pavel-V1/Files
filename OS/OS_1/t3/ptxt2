@@ -1,0 +1,46 @@
+#!/bin/bash
+
+while getopts n:t: a
+do
+        case "$a" in
+        n)
+                n="$OPTARG"
+                ;;
+        t)
+                t="$OPTARG"
+                ;;
+        \?)
+                echo "Передайте аргументы в формате "\
+"'-n <число выводов текста> -t <таймаут вывода> -- <текст>'"
+                exit 1
+                ;;
+        esac
+done
+
+shift $((OPTIND - 1))
+text="$*"
+
+if [ -z "$text" ]
+then
+	echo "Передайте текст для вывода в аргументы"
+	exit 2
+fi
+
+if [ -z "$n" ] || [ "$n" -le 0 ]
+then
+        n=1
+fi
+if [ -z "$t" ] || [ "$t" -lt 0 ]
+then
+        t=0
+fi
+
+while [ "$n" -ge 1 ]
+do
+        echo "$text"
+        n=$(expr $n - 1)
+        if [ "$n" -ge 1 ]
+        then
+                sleep "$t"
+        fi
+done

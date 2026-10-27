@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]
+then
+	echo "Передайте аргументы"
+	exit 1
+fi
+
+arr=("$@")
+size=${#arr[@]}
+
+for ((i = 0; i < size; i++)); do
+	for ((j = 0; j < size - i - 1; j++)); do
+		if [[ "${arr[j]}" > "${arr[j+1]}" ]]
+		then
+			temp="${arr[j]}"
+			arr[j]="${arr[j+1]}"
+			arr[j+1]="$temp"
+		fi
+	done
+done
+
+for item in "${arr[@]}"; do
+	echo "$item"
+done
