@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+trap 'echo "ошибка при создании файла" >&2' ERR
+
+if [ -z "$1" ]; then
+	echo "нету name, нет и файла"
+	exit 1
+fi
+
+if [ -e "$1" ]; then
+	echo "файл уже существует"
+	exit 2
+fi
+
+touch "$1"
+echo "файл создан"
