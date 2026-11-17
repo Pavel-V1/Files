@@ -13,5 +13,9 @@ if [ -e "$1" ]; then
 	exit 2
 fi
 
+if [[ "$1" = .* ]]; then
+	false
+fi
+
 touch "$1"
 echo "файл создан"
